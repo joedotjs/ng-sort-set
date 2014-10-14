@@ -5,7 +5,7 @@ ng-sort-set
 
 **ngSortSet** is a small AngularJS module that provides an object that simplifies managing sort predicates used by AngularJS' built-in *orderBy* filter.
 
-This object was built with managing ASC and DESC in custom tables more easily in mind.
+This object was built specifically for managing ASC and DESC in custom tables more easily.
 
 ## Install:
 ```bash
