@@ -38,4 +38,25 @@ sorter.set('lastName');  // sorter.sort is ['+lastName', '+firstName']
 sorter.set('firstName'); // sorter.sort is ['-firstName', '+lastName']
 ```
 
-Refer to the [demo code](https://github.com/joedotjs/ng-sort-set/blob/gh-pages/demo/index.html#L62) to an applied use.
+Refer to the [demo code](https://github.com/joedotjs/ng-sort-set/blob/gh-pages/demo/index.html#L62) for an example of applied use.
+
+# Methods:
+
+###set(key, [order])
+- Modifies the sort array in regards to the given key.
+- If the predicate does not exist, it will be added with `+` and take precedence.
+- If the predicate exists as `+`, it will toggle to `-` and take precedence.
+- If the predicate exists as `-`, it will be removed.
+- If the **order** ('asc', 'desc' or null) parameter is defined, it will set the predicate to that order.
+
+###remove(key)
+- Removes predicate from sort array.
+
+###empty()
+- Removes all predicates from sort array.
+
+###isAsc(key) / isDesc(key)
+- returns a boolean signifying if the passed in key is ascending (+) or descending (-). Will return `false` if the predicate does not exist.
+
+###querySort(key)
+- returns `'asc'`, `'desc'` or `null` signifying if the key is +, -, or does not exist.
