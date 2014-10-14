@@ -24,18 +24,18 @@ var myApp = angular.module('MyApp', ['ngSortSet']);
 myApp.controller('MyController', function (SortSet) {
   var sorter = new SortSet();
   sorter.sort;             // []
-  sorter.set('firstName'); // ['+firstName']
-  sorter.set('firstName'); // ['-firstName']
-  sorter.set('firstName'); // []
+  sorter.set('firstName'); // sorter.sort is ['+firstName']
+  sorter.set('firstName'); // sorter.sort is ['-firstName']
+  sorter.set('firstName'); // sorter.sort is []
 });
 ```
 
-- If another strings are supplied to the set function, they will take precedence to previously set predicates.
+- If another string is supplied to the set function, it will take precedence to previously set predicates.
 
 ```js
-sorter.sort;             // ['+firstName']
-sorter.set('lastName');  // ['+lastName', '+firstName']
-sorter.set('firstName'); // ['-firstName', '+lastName']
+sorter.sort;             // sorter.sort is ['+firstName']
+sorter.set('lastName');  // sorter.sort is ['+lastName', '+firstName']
+sorter.set('firstName'); // sorter.sort is ['-firstName', '+lastName']
 ```
 
 Refer to the [demo code](https://github.com/joedotjs/ng-sort-set/blob/gh-pages/demo/index.html#L62) to an applied use.
