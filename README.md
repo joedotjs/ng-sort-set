@@ -7,6 +7,8 @@ ng-sort-set
 
 This object was built specifically for managing ASC and DESC in custom tables more easily.
 
+Check out the [live demo](http://joedotjs.github.io/ng-sort-set/).
+
 ## Install:
 ```bash
 $ bower install ng-sort-set
