@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link type="text/css" rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular.min.js"></script>
+    <script src="../dist/ng-sort-set.js"></script>
+    <style>
+      thead td {
+        cursor: pointer;
+      }
+      pre {
+        padding-top: 30px;
+      }
+      #fancy-buttons {
+        width: 90%;
+        margin: 0 auto;
+      }
+      .asc {
+        color: green;
+      }
+      .desc {
+        color: red;
+      }
+    </style>
+    <title>ngSortSet Demo</title>
+  </head>
+  <body ng-app="Demo" ng-controller="Table">
+      <pre>
+        {{sort}}
+      </pre>
+      <div id="fancy-buttons">
+        <button ng-click="eraseAllSorts()">Erase all sorts</button>
+        <button ng-click="setTitleAsc()">Set sort to title ascending</button>
+      </div>
+      <table style="width: 90%; margin: 50px auto 0 auto;" class="table">
+        <thead>
+          <tr>
+            <td ng-class="{ asc: keyIsAsc(heading), desc: keyIsDesc(heading) }"
+                ng-repeat="heading in headings"
+                ng-click="setSort(heading)">
+              {{ heading }}
+            </td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="album in albums | orderBy:sort">
+            <td>{{ album.title }}</td>
+            <td>{{ album.release }}</td>
+            <td>{{ album.chartUK }}</td>
+            <td>{{ album.chartUS }}</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <script>
+
+        var app = angular.module('Demo', ['ngSortSet']);
+
+        app.controller('Table', function (SortSet, TableData, $scope) {
+
+          // Instantiate a new sort set.
+          var sorter = new SortSet();
+
+          // This is safe to do as all actions taken on
+          // sort array mutate the same array.
+          $scope.sort = sorter.sort;
+
+          $scope.setSort = function (key) {
+            sorter.set(key);
+          };
+
+          $scope.keyIsAsc = function (key) {
+            return sorter.isAsc(key);
+          }
+
+          $scope.keyIsDesc = function (key) {
+            return sorter.isDesc(key);
+          };
+
+          $scope.eraseAllSorts = function () {
+            sorter.empty();
+          };
+
+          $scope.setTitleAsc = function () {
+            sorter.set('title', 'asc');
+          };
+
+          $scope.albums = TableData;
+          $scope.headings = ['title', 'release', 'chartUK', 'chartUS'];
+
+        });
+
+        app.value('TableData', [
+          { title: 'In Rainbows', release: '2007', chartUK: 1, chartUS: 1 },
+          { title: 'Pablo Honey', release: '1993', chartUK: 22, chartUS: 32 },
+          { title: 'The Bends', release: '1995', chartUK: 4, chartUS: 88 },
+          { title: 'OK Computer', release: '1997', chartUK: 1, chartUS: 21 },
+          { title: 'Kid A', release: '2000', chartUK: 1, chartUS: 1 },
+          { title: 'Amnesiac', release: '2001', chartUK: 1, chartUS: 2 },
+          { title: 'Hail to the Thief', release: '2003', chartUK: 1, chartUS: 3 },
+          { title: 'The King of Limbs', release: '2011', chartUK: 7, chartUS: 3 }
+        ]);
+
+      </script>
+  </body>
+</html>

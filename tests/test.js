@@ -1,46 +1,46 @@
 describe('Sort Manager', function () {
 
-  beforeEach(module('ngSorter'));
+  beforeEach(module('ngSortSet'));
 
-  var sorter;
-  beforeEach(inject(function (Sorter) {
-    sorter = new Sorter();
+  var sortSet;
+  beforeEach(inject(function (SortSet) {
+    sortSet = new SortSet();
   }));
 
   it('should have an array on the sort key', function () {
-    expect(sorter.sort).to.be.an('array');
+    expect(sortSet.sort).to.be.an('array');
   });
 
   describe('queries', function () {
 
     beforeEach(function () {
-      sorter.sort = ['+name', '-FavoriteFood', '+age'];
+      sortSet.sort = ['+name', '-FavoriteFood', '+age'];
     });
 
     describe('isAsc', function () {
       it('should work correctly', function () {
-        expect(sorter.isAsc('name')).to.be.ok;
-        expect(sorter.isAsc('age')).to.be.ok;
-        expect(sorter.isAsc('FavoriteFood')).to.be.not.ok;
-        expect(sorter.isAsc('Missing')).to.be.not.ok;
+        expect(sortSet.isAsc('name')).to.be.ok;
+        expect(sortSet.isAsc('age')).to.be.ok;
+        expect(sortSet.isAsc('FavoriteFood')).to.be.not.ok;
+        expect(sortSet.isAsc('Missing')).to.be.not.ok;
       });
     });
 
     describe('isDesc', function () {
       it('should work correctly', function () {
-        expect(sorter.isDesc('name')).to.be.not.ok;
-        expect(sorter.isDesc('age')).to.be.not.ok;
-        expect(sorter.isDesc('FavoriteFood')).to.be.ok;
-        expect(sorter.isDesc('Missing')).to.be.not.ok;
+        expect(sortSet.isDesc('name')).to.be.not.ok;
+        expect(sortSet.isDesc('age')).to.be.not.ok;
+        expect(sortSet.isDesc('FavoriteFood')).to.be.ok;
+        expect(sortSet.isDesc('Missing')).to.be.not.ok;
       });
     });
 
     describe('querySort', function () {
       it('should work correctly', function () {
-        expect(sorter.querySort('name')).to.be.equal('asc');
-        expect(sorter.querySort('age')).to.be.equal('asc');
-        expect(sorter.querySort('FavoriteFood')).to.be.equal('desc');
-        expect(sorter.querySort('Missing')).to.be.equal(null);
+        expect(sortSet.querySort('name')).to.be.equal('asc');
+        expect(sortSet.querySort('age')).to.be.equal('asc');
+        expect(sortSet.querySort('FavoriteFood')).to.be.equal('desc');
+        expect(sortSet.querySort('Missing')).to.be.equal(null);
       });
     });
 
@@ -49,14 +49,14 @@ describe('Sort Manager', function () {
   describe('remove', function () {
 
     beforeEach(function () {
-      sorter.sort = ['+name', '-age', '+FavoriteFood'];
+      sortSet.sort = ['+name', '-age', '+FavoriteFood'];
     });
 
     it('should work correctly', function () {
-      sorter.remove('name');
-      expect(sorter.sort).to.be.deep.equal(['-age', '+FavoriteFood']);
-      sorter.remove('FavoriteFood');
-      expect(sorter.sort).to.be.deep.equal(['-age']);
+      sortSet.remove('name');
+      expect(sortSet.sort).to.be.deep.equal(['-age', '+FavoriteFood']);
+      sortSet.remove('FavoriteFood');
+      expect(sortSet.sort).to.be.deep.equal(['-age']);
     });
 
   });
@@ -66,28 +66,28 @@ describe('Sort Manager', function () {
     describe('without supplied order', function () {
 
       it('should add key as asc if it does not exist', function () {
-        sorter.set('name');
-        expect(sorter.sort[0]).to.be.equal('+name');
+        sortSet.set('name');
+        expect(sortSet.sort[0]).to.be.equal('+name');
       });
 
       it('should switch key to desc if it exists as asc', function () {
-        sorter.sort = ['+name'];
-        sorter.set('name');
-        expect(sorter.sort[0]).to.be.equal('-name');
+        sortSet.sort = ['+name'];
+        sortSet.set('name');
+        expect(sortSet.sort[0]).to.be.equal('-name');
       });
 
       it('should remove key it exists as desc', function () {
-        sorter.sort = ['-name'];
-        sorter.set('name');
-        expect(sorter.sort[0]).to.be.equal(undefined);
+        sortSet.sort = ['-name'];
+        sortSet.set('name');
+        expect(sortSet.sort[0]).to.be.equal(undefined);
       });
 
       it('should always set key as first element in array', function () {
-        sorter.sort = ['+name'];
-        sorter.set('age');
-        expect(sorter.sort[0]).to.be.equal('+age');
-        sorter.set('name');
-        expect(sorter.sort[0]).to.be.equal('-name');
+        sortSet.sort = ['+name'];
+        sortSet.set('age');
+        expect(sortSet.sort[0]).to.be.equal('+age');
+        sortSet.set('name');
+        expect(sortSet.sort[0]).to.be.equal('-name');
       });
 
     });
@@ -95,20 +95,20 @@ describe('Sort Manager', function () {
     describe('with supplied order', function () {
 
       it('should set that key with desc', function () {
-        sorter.set('name', 'desc');
-        expect(sorter.sort[0]).to.be.equal('-name');
+        sortSet.set('name', 'desc');
+        expect(sortSet.sort[0]).to.be.equal('-name');
       });
 
       it('should set that key with asc', function () {
-        sorter.sort = ['-name'];
-        sorter.set('name', 'asc');
-        expect(sorter.sort[0]).to.be.equal('+name');
+        sortSet.sort = ['-name'];
+        sortSet.set('name', 'asc');
+        expect(sortSet.sort[0]).to.be.equal('+name');
       });
 
       it('should remove that key with null', function () {
-        sorter.sort = ['+name'];
-        sorter.set('name', null);
-        expect(sorter.sort.length).to.be.equal(0);
+        sortSet.sort = ['+name'];
+        sortSet.set('name', null);
+        expect(sortSet.sort.length).to.be.equal(0);
       });
 
     });
@@ -117,9 +117,9 @@ describe('Sort Manager', function () {
 
   describe('empty', function () {
     it('should clear out the array', function () {
-      sorter.sort = ['+name', '-FavoriteFood', '+age'];
-      sorter.empty();
-      expect(sorter.sort).to.be.deep.equal([]);
+      sortSet.sort = ['+name', '-FavoriteFood', '+age'];
+      sortSet.empty();
+      expect(sortSet.sort).to.be.deep.equal([]);
     });
   });
 
