@@ -33,8 +33,8 @@ myApp.controller('MyController', function (SortSet) {
 - If another strings are supplied to the set function, they will take precedence to previously set predicates.
 
 ```js
-sorter.sort; // ['+firstName']
-sorter.set('lastName'); // ['+lastName', '+firstName']
+sorter.sort;             // ['+firstName']
+sorter.set('lastName');  // ['+lastName', '+firstName']
 sorter.set('firstName'); // ['-firstName', '+lastName']
 ```
 
